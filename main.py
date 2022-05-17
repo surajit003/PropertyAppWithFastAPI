@@ -18,14 +18,22 @@ templates = Jinja2Templates(directory="templates")
 
 @app.get("/")
 def read_root(request: Request):
-    return templates.TemplateResponse("charge.html", {"request": request, "name":"surajit"})
+    return templates.TemplateResponse("charge.html", {"request": request, "name": "surajit"})
 
 
 @app.post("/contacts")
-def create_contact(contact: schema.ContactBase, db: Session = Depends(get_db)):
+def create_contact(contact: schema.CreateContact, db: Session = Depends(get_db)):
     try:
         contact = utils.create_contact(data=contact.dict())
     except utils.ContactException as exc:
         raise HTTPException(status_code=200, detail=str(exc))
     return contact
 
+
+@app.post("/companies")
+def create_company(company: schema.CreateCompany, db: Session = Depends(get_db)):
+    try:
+        company = utils.create_company(data=company.dict())
+    except utils.ContactException as exc:
+        raise HTTPException(status_code=200, detail=str(exc))
+    return company
