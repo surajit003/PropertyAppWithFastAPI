@@ -15,7 +15,7 @@ class ContactBase(BaseModel):
 
 
 class CreateContact(ContactBase):
-    company_name:str
+    company_name: str
 
 
 class CreateCompany(CompanyBase):
