@@ -4,7 +4,7 @@ from pydantic import validator
 
 class CompanyBase(BaseModel):
     org_id: str
-    org_name:str
+    org_name: str
 
 
 class ContactBase(BaseModel):
@@ -15,7 +15,7 @@ class ContactBase(BaseModel):
 
 
 class CreateContact(ContactBase):
-    pass
+    company_name:str
 
 
 class CreateCompany(CompanyBase):

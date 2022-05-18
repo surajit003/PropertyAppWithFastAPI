@@ -1,5 +1,3 @@
-from typing import Union
-
 from fastapi import FastAPI
 from fastapi import Request
 from fastapi import Depends
@@ -31,9 +29,27 @@ def create_contact(contact: schema.CreateContact, db: Session = Depends(get_db))
 
 
 @app.post("/companies")
-def create_company(company: schema.CreateCompany, db: Session = Depends(get_db)):
+def create_company(company: schema.CreateCompany):
     try:
         company = utils.create_company(data=company.dict())
     except utils.ContactException as exc:
         raise HTTPException(status_code=200, detail=str(exc))
     return company
+
+
+@app.get("/company/{company_name}/")
+def get_company(company_name):
+    try:
+        company = utils.get_company_by_name(company_name)
+    except utils.CompanyException as exc:
+        raise HTTPException(status_code=200, detail=str(exc))
+    return company
+
+
+@app.get("/contact/{email}/")
+def get_contact(email):
+    try:
+        contact = utils.get_contact_by_email(email)
+    except utils.ContactException as exc:
+        raise HTTPException(status_code=200, detail=str(exc))
+    return contact
