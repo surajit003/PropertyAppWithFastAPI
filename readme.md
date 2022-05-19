@@ -1,15 +1,15 @@
-#Use case
+# Use case
 
 An organization called Test Org comes to a property management company. The property management
 investigates the property and determines a rate and sends the organization a quotation.
 Upon agreement, the property management Co sends a payment link for the organization to make the
 payment. The Organization makes the payment and a payment record is saved in the Database
 
-#Data Store
+# Data Store
 
     - Organization/Company record is saved in a postgres db and Hubspot for business to use.
 
-#Key points to consider
+# Key points to consider
 
     - Since data is supposed to reside in two places namely postgresql database and Hubspot CRM.
       Data consistency is key and hence the synchronisation of data is a big part of the design.
