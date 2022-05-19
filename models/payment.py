@@ -38,7 +38,7 @@ class Charge(Base):
     amount = Column(Integer, nullable=False)
     charge_type = Column(Enum(ChargeType), nullable=False)
     org_id = Column(Integer, ForeignKey("organization.id"))
-    organization = relationship("Organization", back_populates="charges")
+    organization = relationship("Organization", backref="charges")
 
 
 class Payment(Base):
@@ -47,5 +47,5 @@ class Payment(Base):
     id = Column(Integer, primary_key=True, index=True)
     transaction_id = Column(String, unique=True, index=True)
     charge_id = Column(Integer, ForeignKey("charge.id"), nullable=False)
-    charge = relationship("Charge", back_populates="payments")
+    charge = relationship("Charge", backref="payments")
     response = Column(String, nullable=True)

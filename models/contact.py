@@ -18,5 +18,5 @@ class Contact(Base):
     phone = Column(String, nullable=False, unique=True, index=True)
     active = Column(Boolean, default=False)
     org_id = Column(Integer, ForeignKey("organization.id"), nullable=False)
-    organization = relationship("Organization", back_populates="charges")
-    UniqueConstraint('org_id', 'email', name='contact_email_organization')
+    organization = relationship("Organization", backref="charges")
+    UniqueConstraint("org_id", "email", name="contact_email_organization")
