@@ -36,9 +36,7 @@ def create_contact(data):
         }
 
         data = {contact_map[k]: v for k, v in data.items()}
-        simple_public_object_input = SimplePublicObjectInput(
-            properties=data
-        )
+        simple_public_object_input = SimplePublicObjectInput(properties=data)
         contact = api_client.crm.contacts.basic_api.create(
             simple_public_object_input=simple_public_object_input
         )
@@ -47,7 +45,7 @@ def create_contact(data):
         company_id = company["id"]
         associate_contact_to_organization(contact_id, company_id)
         return {"contact_id": contact.id}
-    except hubspot.crm.contacts.exceptions.ApiException as e:
+    except contacts.exceptions.ApiException as e:
         raise ContactException(e)
 
 
@@ -56,13 +54,11 @@ def create_company(data):
     try:
         company_map = {
             "org_id": "companynumber",
-            "org_name": "name",
+            "name": "name",
         }
 
         data = {company_map[k]: v for k, v in data.items()}
-        simple_public_object_input = SimplePublicObjectInput(
-            properties=data
-        )
+        simple_public_object_input = SimplePublicObjectInput(properties=data)
         company = api_client.crm.companies.basic_api.create(
             simple_public_object_input=simple_public_object_input
         )
@@ -107,9 +103,7 @@ def get_contact_by_email(email):
         contact = api_client.crm.contacts.search_api.do_search(request)
         if contact.results:
             contact_detail = contact.results[0]
-            return {
-                "id": contact_detail.id
-            }
+            return {"id": contact_detail.id}
         else:
             return {}
     except contacts.exceptions.ApiException as e:
