@@ -26,8 +26,8 @@ class Organization(Base):
     __tablename__ = "organization"
 
     id = Column(Integer, primary_key=True, index=True)
-    org_id = Column(String)
-    name = Column(String)
+    org_id = Column(String, nullable=False, unique=True)
+    name = Column(String, nullable=False, unique=True)
 
 
 class Charge(Base):

@@ -20,7 +20,7 @@ def create_company(db: Session, company: CreateCompany):
     return db_item
 
 
-def delete_company(db: Session, organization_id):
+def delete_company(db: Session, organization_id: int):
     db_organization = db.query(payment.Organization).get(organization_id)
     if db_organization:
         db.delete(db_organization)
@@ -28,3 +28,8 @@ def delete_company(db: Session, organization_id):
         return True
     else:
         return None
+
+
+def filter_company_by_name(db: Session, company_name: str):
+    company = db.query(payment.Organization).filter_by(name=company_name)
+    return company

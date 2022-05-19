@@ -6,14 +6,21 @@ from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 
 from crud.company import CompanyExistException
+from crud.contact import ContactExistException
 from dependencies.dependencies import get_db
 from schemas import schema
 from hubspot_app import utils
 from crud import company as _company
+from crud import contact as _contact
 
 app = FastAPI()
 
 templates = Jinja2Templates(directory="templates")
+
+
+def convert_to_dict(obj: list):
+    result = [item.as_dict() for item in obj]
+    return result
 
 
 @app.get("/")
@@ -24,12 +31,21 @@ def read_root(request: Request):
 
 
 @app.post("/contacts")
-def create_contact(contact: schema.CreateContact):
+def create_contact(contact: schema.CreateContact, db: Session = Depends(get_db)):
+    db_contact = None
+    hubspot_contact = None
     try:
-        contact = utils.create_contact(data=contact.dict())
-    except utils.ContactException as exc:
+        org_name = contact.company_name
+        db_org = _company.filter_company_by_name(db, org_name)
+        if db_org:
+            org = db_org.all()[0]
+            db_contact = _contact.create_contact(db, contact, org.id)
+            hubspot_contact = utils.create_contact(data=contact.dict())
+    except (utils.ContactException, ContactExistException) as exc:
+        if isinstance(exc, utils.ContactException) and db_contact:
+            _contact.delete_contact(db, db_contact.id)
         raise HTTPException(status_code=200, detail=str(exc))
-    return contact
+    return hubspot_contact
 
 
 @app.post("/companies")
