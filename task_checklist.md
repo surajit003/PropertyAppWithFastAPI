@@ -10,9 +10,22 @@
 #Task 2
     - Onboard a contact into the system
     - Save Contact details in database
+    - Associate contact with the organization
     - Save Contact details in Hubspot
 
-#Task 3
+#Task 3 (TODO)
     - Create a Charge into our system for an organization
     - Save Charge details in database
     - Save Charge details in Hubspot
+
+#Task 4 (TODO)
+    - Generate a payment link for that organization
+    - Charge a client using Stripe Payment API
+    - Save Payment details in the DB for that charge
+    - Save Payment details in Hubspot
+
+# Task 5 (TODO)
+    - Integrate pytest
+    - Add tests for the API endpoints
+    - Add tests for the stripe api functionality
+    - Add tests for hubspot functions
