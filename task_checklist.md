@@ -8,4 +8,11 @@
      then the record is deleted from our database to maintain consistency.
     
 #Task 2
-    -TODO
+    - Onboard a contact into the system
+    - Save Contact details in database
+    - Save Contact details in Hubspot
+
+#Task 3
+    - Create a Charge into our system for an organization
+    - Save Charge details in database
+    - Save Charge details in Hubspot
