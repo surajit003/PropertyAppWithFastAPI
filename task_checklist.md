@@ -1,4 +1,4 @@
-#Task 1
+#Task 1 (Done)
      Onboard an organization/company into our system
     - Save organization details in database
     - Save organization details to Hubspot
@@ -7,7 +7,7 @@
      if organization creation succeeds in our database but fails in Hubspot
      then the record is deleted from our database to maintain consistency.
     
-#Task 2
+#Task 2 (Done)
     - Onboard a contact into the system
     - Save Contact details in database
     - Associate contact with the organization
