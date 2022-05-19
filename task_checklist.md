@@ -31,6 +31,21 @@
     - Save Payment details in Hubspot
 
 # Task 5 (TODO)
+    
+    - Generate Payment Receipt pdf
+    - Integrate with Sendgrid API for emailing
+    - Email company and attach payment receipt with confirmation details
+
+# Task 6 (TODO)
+
+    - Booking appointment for property 
+    - Record relevant information for appointment
+    - Save in Database
+    - Save in Hubspot
+
+
+# Task 7 (TODO)
+
     - Integrate pytest
     - Add tests for the API endpoints
     - Add tests for the stripe api functionality
