@@ -23,8 +23,10 @@
 
 #Task 4 (TODO)
 
+    - Render stripe charge form in charge.html
     - Generate a payment link for that organization
     - Charge a client using Stripe Payment API
+    - Use status.html to display payment status to client
     - Save Payment details in the DB for that charge
     - Save Payment details in Hubspot
 
