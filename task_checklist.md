@@ -1,4 +1,4 @@
-#Task 1 (Done)
+# Task 1 (Done)
 
      Onboard an organization/company into our system
     - Save organization details in database
@@ -8,20 +8,20 @@
      if organization creation succeeds in our database but fails in Hubspot
      then the record is deleted from our database to maintain consistency.
     
-#Task 2 (Done)
+# Task 2 (Done)
 
     - Onboard a contact into the system
     - Save Contact details in database
     - Associate contact with the organization
     - Save Contact details in Hubspot
 
-#Task 3 (TODO)
+# Task 3 (TODO)
 
     - Create a Charge into our system for an organization
     - Save Charge details in database
     - Save Charge details in Hubspot
 
-#Task 4 (TODO)
+# Task 4 (TODO)
 
     - Render stripe charge form in charge.html
     - Generate a payment link for that organization
