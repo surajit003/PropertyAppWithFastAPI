@@ -7,7 +7,7 @@ payment. The Organization makes the payment and a payment record is saved in the
 
 # Data Store
 
-    - Organization/Company record is saved in a postgres db and Hubspot for business to use.
+    - Organization/Company record is saved in a postgres db(for internal datastore) and Hubspot for business to use.
 
 # Key points to consider
 
