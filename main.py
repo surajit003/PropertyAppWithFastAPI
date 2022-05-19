@@ -18,11 +18,6 @@ app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 
 
-def convert_to_dict(obj: list):
-    result = [item.as_dict() for item in obj]
-    return result
-
-
 @app.get("/")
 def read_root(request: Request):
     return templates.TemplateResponse(
