@@ -12,3 +12,4 @@ payment. The Organization makes the payment and a payment record is saved in the
    - pip install -r requirements.txt
    - create .env file and add the keys for env-example
    - alembic upgrade head (to migrate)
+   - uvicorn main:app --reload (to run server)
