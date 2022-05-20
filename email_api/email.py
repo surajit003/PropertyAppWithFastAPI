@@ -2,6 +2,7 @@ import python_http_client
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import To
 from sendgrid.helpers.mail.mail import Mail
+
 import settings
 
 
