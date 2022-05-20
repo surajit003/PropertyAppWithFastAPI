@@ -9,7 +9,7 @@ from crud.company import CompanyExistException
 from crud.contact import ContactExistException
 from dependencies.dependencies import get_db
 from schemas import schema
-from hubspot_app import utils
+from hubspot_api import utils
 from crud import company as _company
 from crud import contact as _contact
 
