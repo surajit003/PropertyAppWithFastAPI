@@ -17,11 +17,13 @@ pathspec==0.9.0
 platformdirs==2.5.2
 psycopg2-binary==2.9.3
 pydantic==1.9.0
+python_http_client==3.3.7
 python-decouple==3.6
 hubspot-api-client==5.0.0
 requests==2.27.1
 sniffio==1.2.0
 SQLAlchemy==1.4.36
+sendgrid==6.9.7
 starlette==0.19.1
 stripe==3.0.0
 tomli==2.0.1
