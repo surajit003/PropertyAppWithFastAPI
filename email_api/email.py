@@ -1,7 +1,7 @@
 import python_http_client
-import sendgrid
-from sendgrid.helpers.mail import *
-
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import To
+from sendgrid.helpers.mail.mail import Mail
 import settings
 
 
@@ -45,7 +45,7 @@ def generate_message(data):
 def send_email(data):
     message = generate_message(data)
     try:
-        sendgrid_client = sendgrid.SendGridAPIClient(settings.SENDGRID_API_KEY)
+        sendgrid_client = SendGridAPIClient(settings.SENDGRID_API_KEY)
         response = sendgrid_client.send(message)
     except python_http_client.exceptions.UnauthorizedError as e:
         raise UnauthorizedException(e)
