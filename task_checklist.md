@@ -30,11 +30,8 @@
     - Save Payment details in the DB for that charge
     - Save Payment details in Hubspot
 
-# Task 5 (TODO)
-    
-    - Generate Payment Receipt pdf
+# Task 5 (DONE)
     - Integrate with Sendgrid API for emailing
-    - Email company and attach payment receipt with confirmation details
 
 # Task 6 (TODO)
 
