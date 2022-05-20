@@ -1,4 +1,3 @@
-import enum
 import python_http_client
 import sendgrid
 from sendgrid.helpers.mail import *
@@ -18,15 +17,10 @@ class BadRequestException(SendgridException):
     pass
 
 
-class EmailType(enum.Enum):
-    WELCOME_EMAIL = "welcome_template"
-    PAYMENT_EMAIL = "payment_template"
-
-
 def generate_message(data):
     templates = {
-        "welcome_template": settings.WELCOME_MESSAGE_TEMPLATE_ID,
-        "payment_template": settings.PAYMENT_CONFIRMATION_TEMPLATE_ID,
+        "welcome_email": settings.WELCOME_MESSAGE_TEMPLATE_ID,
+        "payment_email": settings.PAYMENT_CONFIRMATION_TEMPLATE_ID,
     }
     recipient_message = []
     recipients = data["recipients"]
