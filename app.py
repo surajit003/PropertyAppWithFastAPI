@@ -1,15 +1,7 @@
 from fastapi import FastAPI
 from fastapi import Request
-from fastapi import Depends
-from fastapi import HTTPException
 from fastapi.templating import Jinja2Templates
-from sqlalchemy.orm import Session
 
-from crud.company import CompanyExistException
-from dependencies.dependencies import get_db
-from schemas import schema
-from hubspot_api import utils
-from crud import company as _company
 from routes import email
 from routes import contact
 from routes import company
