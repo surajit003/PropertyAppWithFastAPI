@@ -12,6 +12,11 @@ from schemas import schema
 from hubspot_api import utils
 from crud import company as _company
 from crud import contact as _contact
+from crud.message import create_message
+from models.message import MessageType
+from models.message import Carrier
+
+from email_api import email
 
 app = FastAPI()
 
@@ -72,3 +77,20 @@ def get_contact(email):
     except utils.ContactException as exc:
         raise HTTPException(status_code=200, detail=str(exc))
     return contact
+
+
+@app.post("/email/send/")
+async def send_email(request: Request, db: Session = Depends(get_db)):
+    try:
+        data = await request.json()
+        response = email.send_email(data)
+        message = dict(
+            message_id=response.headers["x-message-id"],
+            status_code=response.status_code,
+            message_type=MessageType.EMAIL.value,
+            carrier=Carrier.SENDGRID.value,
+        )
+        create_message(db, message)
+    except Exception as exc:
+        raise HTTPException(status_code=200, detail=str(exc))
+    return response
