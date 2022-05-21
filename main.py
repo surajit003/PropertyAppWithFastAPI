@@ -8,11 +8,14 @@ from sqlalchemy.orm import Session
 from crud.company import CompanyExistException
 from crud.contact import ContactExistException
 from dependencies.dependencies import get_db
+from email_api.email import UnauthorizedException
+from email_api.email import BadRequestException
 from schemas import schema
 from hubspot_api import utils
 from crud import company as _company
 from crud import contact as _contact
 from crud.message import create_message
+from crud.message import MessageExistException
 from models.message import MessageType
 from models.message import Carrier
 
@@ -91,6 +94,6 @@ async def send_email(request: Request, db: Session = Depends(get_db)):
             carrier=Carrier.SENDGRID.value,
         )
         create_message(db, message)
-    except Exception as exc:
+    except (UnauthorizedException, BadRequestException, MessageExistException) as exc:
         raise HTTPException(status_code=200, detail=str(exc))
     return response
