@@ -1,9 +1,10 @@
 import enum
-
+import datetime
 from sqlalchemy import Column
 from sqlalchemy import Integer
 from sqlalchemy import String
 from sqlalchemy import Enum
+from sqlalchemy import DateTime
 
 from database import Base
 
@@ -27,3 +28,5 @@ class Message(Base):
     carrier = Column(Enum(Carrier), nullable=False)
     status_code = Column(String, nullable=False)
     response = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.datetime.now)
+    modified_at = Column(DateTime, default=datetime.datetime.now)
