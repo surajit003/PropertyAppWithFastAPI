@@ -8,7 +8,7 @@ class MessageExistException(Exception):
     pass
 
 
-def create_message(db: Session, message_data):
+async def save_message(db: Session, message_data):
     db_item = message.Message(**message_data)
     try:
         db.add(db_item)

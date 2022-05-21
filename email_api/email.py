@@ -43,7 +43,7 @@ def generate_message(data):
     return message
 
 
-def send_email(data):
+async def send_email(data):
     message = generate_message(data)
     try:
         sendgrid_client = SendGridAPIClient(settings.SENDGRID_API_KEY)
