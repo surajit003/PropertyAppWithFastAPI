@@ -10,6 +10,7 @@ from settings import DATABASE
 from settings import DATABASE_USER
 from settings import DATABASE_PASSWORD
 from settings import DATABASE_HOST
+from settings import DATABASE_DRIVER
 from database import Base
 
 # this is the Alembic Config object, which provides
@@ -25,7 +26,7 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 from models import payment
 from models import contact
-
+from models import message
 target_metadata = Base.metadata
 
 
@@ -36,7 +37,7 @@ target_metadata = Base.metadata
 
 
 def get_url():
-    return f"postgresql://{DATABASE_USER}:{DATABASE_PASSWORD}@{DATABASE_HOST}/{DATABASE}"
+    return f"{DATABASE_DRIVER}://{DATABASE_USER}:{DATABASE_PASSWORD}@{DATABASE_HOST}/{DATABASE}"
 
 
 def run_migrations_offline():
