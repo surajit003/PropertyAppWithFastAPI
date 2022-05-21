@@ -23,7 +23,7 @@ templates = Jinja2Templates(directory="templates")
 
 
 @app.get("/")
-def read_root(request: Request):
+def home(request: Request):
     return templates.TemplateResponse(
-        "charge.html", {"request": request, "name": "surajit"}
+        "charge.html", {"request": request, "message": "Welcome to Property Management API"}
     )
