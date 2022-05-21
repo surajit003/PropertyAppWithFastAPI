@@ -8,20 +8,14 @@ from sqlalchemy.orm import Session
 from crud.company import CompanyExistException
 from crud.contact import ContactExistException
 from dependencies.dependencies import get_db
-from email_api.email import UnauthorizedException
-from email_api.email import BadRequestException
 from schemas import schema
 from hubspot_api import utils
 from crud import company as _company
 from crud import contact as _contact
-from crud.message import save_message
-from crud.message import MessageExistException
-from models.message import MessageType
-from models.message import Carrier
-
-from email_api import email
+from routes import email
 
 app = FastAPI()
+app.include_router(email.router)
 
 templates = Jinja2Templates(directory="templates")
 
@@ -80,20 +74,3 @@ def get_contact(email):
     except utils.ContactException as exc:
         raise HTTPException(status_code=200, detail=str(exc))
     return contact
-
-
-@app.post("/email/send/")
-async def send_email(request: Request, db: Session = Depends(get_db)):
-    try:
-        data = await request.json()
-        response = await email.send_email(data)
-        message = dict(
-            message_id=response.headers["x-message-id"],
-            status_code=response.status_code,
-            message_type=MessageType.EMAIL.value,
-            carrier=Carrier.SENDGRID.value,
-        )
-        await save_message(db, message)
-    except (UnauthorizedException, BadRequestException, MessageExistException) as exc:
-        raise HTTPException(status_code=200, detail=str(exc))
-    return response
