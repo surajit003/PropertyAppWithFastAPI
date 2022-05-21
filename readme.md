@@ -24,6 +24,21 @@ payment. The Organization makes the payment and a payment record is saved in the
    - create .env file and add the keys for env-example
    - alembic upgrade head (to migrate)
    - uvicorn app:app --reload (to run server)
+   - /docs - to view available endpoints
+
+# Endpoints - v1 (Version 1)
+
+    Contact
+        - /api/v1/contacts/ - POST - Create a Contact
+        - /api/v1/contact/<email>/ - GET email by contact
+    
+    Company
+        - /api/v1/companies/ - POST - Create a Company/Organization
+        - /api/v1/company/<company-name>/ - GET - Get company by Name
+    
+    Email
+        - /api/v1/email/send/ - POST - Send an email
+
 
 # External Integrations
     

@@ -10,6 +10,7 @@ from dependencies.dependencies import get_db
 from crud import company as _company
 
 router = APIRouter(
+    prefix='/api/v1',
     tags=["company"],
     responses={404: {"description": "Not found"}},
 )

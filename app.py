@@ -2,9 +2,9 @@ from fastapi import FastAPI
 from fastapi import Request
 from fastapi.templating import Jinja2Templates
 
-from routes import email
-from routes import contact
-from routes import company
+from routes.v1 import email
+from routes.v1 import contact
+from routes.v1 import company
 
 app = FastAPI()
 app.include_router(email.router)

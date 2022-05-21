@@ -15,13 +15,13 @@ from sqlalchemy.orm import Session
 from dependencies.dependencies import get_db
 
 router = APIRouter(
-    prefix="/email",
+    prefix='/api/v1',
     tags=["email"],
     responses={404: {"description": "Not found"}},
 )
 
 
-@router.post("/send/")
+@router.post("/email/send/")
 async def send_email(request: Request, db: Session = Depends(get_db)):
     try:
         data = await request.json()
