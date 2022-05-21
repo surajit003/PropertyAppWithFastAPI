@@ -30,7 +30,9 @@
     - Save Payment details in the DB for that charge
     - Save Payment details in Hubspot
 
-# Task 5 (IN PROGRESS)
+# Task 5 (DONE)
+    - Email API endpoint for sending emails
+    - Message Model for saving message record
     - Integrate with Sendgrid API for emailing
     - Save message response in DB
 
