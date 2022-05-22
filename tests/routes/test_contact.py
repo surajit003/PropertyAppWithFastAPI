@@ -73,7 +73,7 @@ def test_create_contact_raises_hubspot_contactexception(
     mock_create_contact, mock_delete_contact, organization, client
 ):
     mock_create_contact.side_effect = ContactException(
-        "Email with this contact exists " "in Hubspot"
+        "Email with this contact exists in Hubspot"
     )
     mock_delete_contact.return_value = True
     response = client.post(
