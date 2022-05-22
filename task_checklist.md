@@ -44,7 +44,7 @@
     - Save in Hubspot
 
 
-# Task 7 (TODO)
+# Task 7 (IN PROGRESS)
 
     - Integrate pytest
     - Add tests for the API endpoints
