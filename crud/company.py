@@ -1,7 +1,7 @@
 import sqlalchemy.exc
 from sqlalchemy.orm import Session
 
-from models import payment
+from models.payment import Organization
 from schemas.schema import CreateCompany
 
 
@@ -10,7 +10,7 @@ class CompanyExistException(Exception):
 
 
 def create_company(db: Session, company: CreateCompany):
-    db_item = payment.Organization(**company.dict())
+    db_item = Organization(**company.dict())
     try:
         db.add(db_item)
         db.commit()
@@ -21,7 +21,7 @@ def create_company(db: Session, company: CreateCompany):
 
 
 def delete_company(db: Session, organization_id: int):
-    db_organization = db.query(payment.Organization).get(organization_id)
+    db_organization = db.query(Organization).get(organization_id)
     if db_organization:
         db.delete(db_organization)
         db.commit()
@@ -31,5 +31,5 @@ def delete_company(db: Session, organization_id: int):
 
 
 def filter_company_by_name(db: Session, company_name: str):
-    company = db.query(payment.Organization).filter_by(name=company_name)
+    company = db.query(Organization).filter_by(name=company_name)
     return company
