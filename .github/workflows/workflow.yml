@@ -21,6 +21,4 @@ jobs:
         pip install pytest-cov
         coverage run -m pytest
     - name: Upload Coverage to Codecov
-      with:
-        token: 44c2af05-9cbb-4e7d-b3de-94784087ddad
       uses: codecov/codecov-action@v2
