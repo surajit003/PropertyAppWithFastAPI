@@ -20,14 +20,11 @@ router = APIRouter(
 @router.post("/contacts/")
 def create_contact(contact: schema.CreateContact, db: Session = Depends(get_db)):
     db_contact = None
-    hubspot_contact = None
     try:
         org_name = contact.company_name
-        db_org = _company.filter_company_by_name(db, org_name)
-        if db_org:
-            org = db_org.all()[0]
-            db_contact = _contact.create_contact(db, contact, org.id)
-            hubspot_contact = utils.create_contact(data=contact.dict())
+        db_org = _company.filter_company_by_name(db, org_name).all()[0]
+        db_contact = _contact.create_contact(db, contact, db_org.id)
+        hubspot_contact = utils.create_contact(data=contact.dict())
     except (utils.ContactException, ContactExistException) as exc:
         if isinstance(exc, utils.ContactException) and db_contact:
             _contact.delete_contact(db, db_contact.id)
