@@ -47,3 +47,20 @@ def test_email_send_with_sendgrid_bad_request_exception(mock_send_email, client)
     response = client.post("/api/v1/email/send/", json=read_json("email_data.json"))
     assert response.status_code == 200
     assert response.json() == {"detail": "Bad request"}
+
+
+@mock.patch("routes.v1.email.email.send_email")
+def test_email_send_with_db_duplicate_message_id(
+    mock_send_email, client, sendgrid_message
+):
+    sendgrid_response_mock = SendGridResponseMock(
+        headers={"x-message-id": "123657ab"}, status_code=202
+    )
+    mock_send_email.return_value = sendgrid_response_mock
+    response = client.post("/api/v1/email/send/", json=read_json("email_data.json"))
+    assert response.status_code == 200
+    assert response.json() == {
+        "detail": "duplicate key value violates unique constraint "
+        '"ix_message_message_id"\nDETAIL:  Key (message_id)=('
+        "123657ab) already exists.\n"
+    }
