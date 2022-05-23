@@ -22,8 +22,8 @@ def create_company(company: schema.CreateCompany, db: Session = Depends(get_db))
     try:
         db_company = _company.create_company(db, company)
         company = utils.create_company(data=company.dict())
-    except (utils.ContactException, CompanyExistException) as exc:
-        if isinstance(exc, utils.ContactException) and db_company:
+    except (utils.CompanyException, CompanyExistException) as exc:
+        if isinstance(exc, utils.CompanyException) and db_company:
             _company.delete_company(db, db_company.id)
         raise HTTPException(status_code=200, detail=str(exc))
     return company
