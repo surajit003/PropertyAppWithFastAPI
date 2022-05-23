@@ -56,7 +56,7 @@ def organization(db):
 
 
 @pytest.fixture
-def sendgrid_message(db):
+def message(db):
     message_data = dict(
         message_id="123657ab",
         status_code=202,

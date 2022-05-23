@@ -51,7 +51,7 @@ def test_email_send_with_sendgrid_bad_request_exception(mock_send_email, client)
 
 @mock.patch("routes.v1.email.email.send_email")
 def test_email_send_with_db_duplicate_message_id(
-    mock_send_email, client, sendgrid_message
+    mock_send_email, client, message
 ):
     sendgrid_response_mock = SendGridResponseMock(
         headers={"x-message-id": "123657ab"}, status_code=202
