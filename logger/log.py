@@ -1,11 +1,9 @@
 import json
 import logging
 from functools import wraps
-from settings import BASE_DIR
+from settings import LOG_FILE
 
 logger = logging.getLogger(__name__)
-
-LOG_FILE = BASE_DIR.joinpath('data/app.json')
 
 
 async def append_log(data):
