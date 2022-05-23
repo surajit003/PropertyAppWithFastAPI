@@ -1,7 +1,8 @@
 import json
 from unittest import mock
 
-from email_api.email import UnauthorizedException, BadRequestException
+from email_api.email import UnauthorizedException
+from email_api.email import BadRequestException
 from models.message import Message
 from settings import TEST_DATA_DIR
 
