@@ -46,5 +46,10 @@ payment. The Organization makes the payment and a payment record is saved in the
     - Sendgrid
     - Stripe
 
+# Logs
+
+    - Logs are saved in a dir(data/app.json)
+
+
 # Running tests
     - pytest
