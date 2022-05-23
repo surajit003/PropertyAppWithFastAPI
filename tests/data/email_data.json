@@ -1,0 +1,18 @@
+{
+    "recipients": [
+        {
+            "recipient_email": "dccomics@example.com",
+            "recipient_name": "DC"
+        },
+        {
+            "recipient_email": "baryallen@example.com",
+            "recipient_name": "Flash"
+        }
+    ],
+    "template_content": {
+        "content": "Hey there DC please continue with the Flash seasons"
+    },
+    "sender": "humblefool@example.com",
+    "subject": "Flash Fan",
+    "email_type": "welcome_email"
+}
