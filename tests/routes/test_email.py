@@ -1,6 +1,7 @@
 import json
 from unittest import mock
 
+from email_api.email import UnauthorizedException, BadRequestException
 from models.message import Message
 from settings import TEST_DATA_DIR
 
@@ -29,3 +30,19 @@ def test_email_send(mock_send_email, client, db):
     assert message.message_type.value == "EMAIL"
     assert message.status_code == "202"
     assert message.carrier.value == "SENDGRID"
+
+
+@mock.patch("routes.v1.email.email.send_email")
+def test_email_send_with_sendgrid_unauthorizedexception(mock_send_email, client):
+    mock_send_email.side_effect = UnauthorizedException("Not allowed to access the API")
+    response = client.post("/api/v1/email/send/", json=read_json("email_data.json"))
+    assert response.status_code == 200
+    assert response.json() == {"detail": "Not allowed to access the API"}
+
+
+@mock.patch("routes.v1.email.email.send_email")
+def test_email_send_with_sendgrid_bad_request_exception(mock_send_email, client):
+    mock_send_email.side_effect = BadRequestException("Bad request")
+    response = client.post("/api/v1/email/send/", json=read_json("email_data.json"))
+    assert response.status_code == 200
+    assert response.json() == {"detail": "Bad request"}
