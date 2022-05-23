@@ -8,6 +8,7 @@ from crud.message import MessageExistException
 from email_api import email
 from email_api.email import UnauthorizedException
 from email_api.email import BadRequestException
+from logger.log import save_log
 from models.message import MessageType
 from models.message import Carrier
 from sqlalchemy.orm import Session
@@ -22,6 +23,7 @@ router = APIRouter(
 
 
 @router.post("/email/send/")
+@save_log
 async def send_email(request: Request, db: Session = Depends(get_db)):
     try:
         data = await request.json()
@@ -36,3 +38,4 @@ async def send_email(request: Request, db: Session = Depends(get_db)):
     except (UnauthorizedException, BadRequestException, MessageExistException) as exc:
         raise HTTPException(status_code=200, detail=str(exc))
     return response
+

@@ -19,7 +19,9 @@ class SendGridResponseMock:
 
 
 @mock.patch("routes.v1.email.email.send_email")
-def test_email_send(mock_send_email, client, db):
+@mock.patch("logger.log.append_log")
+def test_email_send(mock_save_log, mock_send_email, client, db):
+    mock_save_log.return_value = "Ok"
     sendgrid_response_mock = SendGridResponseMock(
         headers={"x-message-id": "xvis10203sn"}, status_code=202
     )
@@ -34,7 +36,9 @@ def test_email_send(mock_send_email, client, db):
 
 
 @mock.patch("routes.v1.email.email.send_email")
-def test_email_send_with_sendgrid_unauthorizedexception(mock_send_email, client):
+@mock.patch("logger.log.append_log")
+def test_email_send_with_sendgrid_unauthorizedexception(mock_save_log, mock_send_email, client):
+    mock_save_log.return_value = "Ok"
     mock_send_email.side_effect = UnauthorizedException("Not allowed to access the API")
     response = client.post("/api/v1/email/send/", json=read_json("email_data.json"))
     assert response.status_code == 200
@@ -42,7 +46,9 @@ def test_email_send_with_sendgrid_unauthorizedexception(mock_send_email, client)
 
 
 @mock.patch("routes.v1.email.email.send_email")
-def test_email_send_with_sendgrid_bad_request_exception(mock_send_email, client):
+@mock.patch("logger.log.append_log")
+def test_email_send_with_sendgrid_bad_request_exception(mock_save_log, mock_send_email, client):
+    mock_save_log.return_value = "Ok"
     mock_send_email.side_effect = BadRequestException("Bad request")
     response = client.post("/api/v1/email/send/", json=read_json("email_data.json"))
     assert response.status_code == 200
@@ -50,9 +56,11 @@ def test_email_send_with_sendgrid_bad_request_exception(mock_send_email, client)
 
 
 @mock.patch("routes.v1.email.email.send_email")
+@mock.patch("logger.log.append_log")
 def test_email_send_with_db_duplicate_message_id(
-    mock_send_email, client, message
+        mock_save_log, mock_send_email, client, message
 ):
+    mock_save_log.return_value = "Ok"
     sendgrid_response_mock = SendGridResponseMock(
         headers={"x-message-id": "123657ab"}, status_code=202
     )
@@ -61,6 +69,6 @@ def test_email_send_with_db_duplicate_message_id(
     assert response.status_code == 200
     assert response.json() == {
         "detail": "duplicate key value violates unique constraint "
-        '"ix_message_message_id"\nDETAIL:  Key (message_id)=('
-        "123657ab) already exists.\n"
+                  '"ix_message_message_id"\nDETAIL:  Key (message_id)=('
+                  "123657ab) already exists.\n"
     }
