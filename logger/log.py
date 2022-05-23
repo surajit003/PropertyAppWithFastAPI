@@ -1,15 +1,17 @@
-import json
 import logging
+from logging.handlers import RotatingFileHandler
+
 from functools import wraps
-from settings import LOG_FILE
+
+from settings import LOG_FILE_NAME
 
 logger = logging.getLogger(__name__)
-
-
-async def append_log(data):
-    with open(LOG_FILE, 'a') as file:
-        json.dump(data, file)
-        file.write('\n')
+logger.setLevel(logging.DEBUG)
+formatter = logging.Formatter('%(asctime)s | %(levelname)s | %(message)s')
+fh = RotatingFileHandler(LOG_FILE_NAME)
+fh.setLevel(logging.DEBUG)
+fh.setFormatter(formatter)
+logger.addHandler(fh)
 
 
 def save_log(func):
@@ -29,10 +31,9 @@ def save_log(func):
             if hasattr(request, 'json'):
                 json_data = await request.json()
                 message["data"] = [json_data]
-            await append_log(message)
+            logger.debug(message)
         except Exception as exc:
             logger.exception(f'Exception occurred {exc}')
             pass
         return await func(*args, **kwargs)
-
     return wrapper
