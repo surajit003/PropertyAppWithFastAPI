@@ -5,11 +5,11 @@ from settings import STRIPE_SECRET_KEY
 stripe.api_key = STRIPE_SECRET_KEY
 
 
-class StripeError(Exception):
+class StripeException(Exception):
     pass
 
 
-class PaymentIntentError(StripeError):
+class PaymentIntentException(StripeException):
     pass
 
 
@@ -24,7 +24,7 @@ def create_payment_intent(
             metadata={"organization_id": organization_id, "charge_type": charge_type},
         )
     except stripe.error.InvalidRequestError as e:
-        raise PaymentIntentError(e)
+        raise PaymentIntentException(e)
 
 
 def get_payment_intent(payment_intent_id):
