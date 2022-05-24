@@ -1,7 +1,6 @@
 import json
-from unittest import mock
-
 import pytest
+from unittest import mock
 
 from email_api.email import send_email
 from email_api.email import UnauthorizedException
