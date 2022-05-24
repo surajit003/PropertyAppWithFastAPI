@@ -1,14 +1,33 @@
 import logging
+import os
 from logging.handlers import RotatingFileHandler
-
 from functools import wraps
 
+from settings import LOG_FILE_DIR
 from settings import LOG_FILE_NAME
+
+LOG_FILE = LOG_FILE_DIR.joinpath(LOG_FILE_NAME)
+
+
+def create_log_dir():
+    if not os.path.exists("logs"):
+        os.makedirs("logs")
+
+
+def create_log_file():
+    try:
+        open(LOG_FILE, "x")
+    except FileExistsError:
+        pass
+
+
+create_log_dir()
+create_log_file()
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
-formatter = logging.Formatter('%(asctime)s | %(levelname)s | %(message)s')
-fh = RotatingFileHandler(LOG_FILE_NAME)
+formatter = logging.Formatter("%(asctime)s | %(levelname)s | %(message)s")
+fh = RotatingFileHandler(LOG_FILE)
 fh.setLevel(logging.DEBUG)
 fh.setFormatter(formatter)
 logger.addHandler(fh)
@@ -28,12 +47,13 @@ def save_log(func):
             if hasattr(request, "data"):
                 data = await request.data()
                 message["data"] = [data]
-            if hasattr(request, 'json'):
+            if hasattr(request, "json"):
                 json_data = await request.json()
                 message["data"] = [json_data]
             logger.debug(message)
         except Exception as exc:
-            logger.exception(f'Exception occurred {exc}')
+            logger.exception(f"Exception occurred {exc}")
             pass
         return await func(*args, **kwargs)
+
     return wrapper
