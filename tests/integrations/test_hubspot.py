@@ -61,7 +61,7 @@ def test_create_contact(
 @mock.patch("hubspot_api.utils.api_client")
 def test_create_contact_raises_contact_exception(mock_api_client):
     mock_api_client.crm.contacts.basic_api.create.side_effect = ContactException(
-        "Contact Already " "exists"
+        "Contact Already exists"
     )
 
     with pytest.raises(ContactException) as exc:
