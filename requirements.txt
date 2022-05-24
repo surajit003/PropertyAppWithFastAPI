@@ -34,4 +34,4 @@ typing_extensions==4.2.0
 urllib3==1.26.9
 zipp==3.8.0
 sqlalchemy-utils==0.38.2
-
+pytest-asyncio==0.18.3
