@@ -48,7 +48,7 @@ payment. The Organization makes the payment and a payment record is saved in the
 
 # Logs
 
-    - Logs are saved in a dir(data/app.json)
+    - Logs are saved in a dir(logs/app.json)
 
 
 # Running tests
