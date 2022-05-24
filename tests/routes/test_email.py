@@ -37,7 +37,9 @@ def test_email_send(mock_logger_debug, mock_send_email, client, db):
 
 @mock.patch("routes.v1.email.email.send_email")
 @mock.patch("logger.log.logger.debug")
-def test_email_send_with_sendgrid_unauthorizedexception(mock_logger_debug, mock_send_email, client):
+def test_email_send_with_sendgrid_unauthorizedexception(
+    mock_logger_debug, mock_send_email, client
+):
     mock_logger_debug.return_value = "Ok"
     mock_send_email.side_effect = UnauthorizedException("Not allowed to access the API")
     response = client.post("/api/v1/email/send/", json=read_json("email_data.json"))
@@ -47,7 +49,9 @@ def test_email_send_with_sendgrid_unauthorizedexception(mock_logger_debug, mock_
 
 @mock.patch("routes.v1.email.email.send_email")
 @mock.patch("logger.log.logger.debug")
-def test_email_send_with_sendgrid_bad_request_exception(mock_logger_debug, mock_send_email, client):
+def test_email_send_with_sendgrid_bad_request_exception(
+    mock_logger_debug, mock_send_email, client
+):
     mock_logger_debug.return_value = "Ok"
     mock_send_email.side_effect = BadRequestException("Bad request")
     response = client.post("/api/v1/email/send/", json=read_json("email_data.json"))
@@ -58,7 +62,7 @@ def test_email_send_with_sendgrid_bad_request_exception(mock_logger_debug, mock_
 @mock.patch("routes.v1.email.email.send_email")
 @mock.patch("logger.log.logger.debug")
 def test_email_send_with_db_duplicate_message_id(
-        mock_logger_debug, mock_send_email, client, message
+    mock_logger_debug, mock_send_email, client, message
 ):
     mock_logger_debug.return_value = "Ok"
     sendgrid_response_mock = SendGridResponseMock(
@@ -69,6 +73,6 @@ def test_email_send_with_db_duplicate_message_id(
     assert response.status_code == 200
     assert response.json() == {
         "detail": "duplicate key value violates unique constraint "
-                  '"ix_message_message_id"\nDETAIL:  Key (message_id)=('
-                  "123657ab) already exists.\n"
+        '"ix_message_message_id"\nDETAIL:  Key (message_id)=('
+        "123657ab) already exists.\n"
     }

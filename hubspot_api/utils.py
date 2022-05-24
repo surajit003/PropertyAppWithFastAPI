@@ -34,7 +34,6 @@ def create_contact(data):
             "email": "email",
             "phone": "phone",
         }
-
         data = {contact_map[k]: v for k, v in data.items()}
         simple_public_object_input = SimplePublicObjectInput(properties=data)
         contact = api_client.crm.contacts.basic_api.create(
@@ -104,11 +103,12 @@ def get_contact_by_email(email):
         if contact.results:
             contact_detail = contact.results[0]
             contact_properties = contact_detail.properties
-            return {"id": contact_detail.id,
-                    "email": contact_properties["email"],
-                    "firstname": contact_properties["firstname"],
-                    "lastname": contact_properties["lastname"],
-                    }
+            return {
+                "id": contact_detail.id,
+                "email": contact_properties["email"],
+                "firstname": contact_properties["firstname"],
+                "lastname": contact_properties["lastname"],
+            }
         else:
             return {}
     except contacts.exceptions.ApiException as e:
