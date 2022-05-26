@@ -1,9 +1,11 @@
 from fastapi import APIRouter
 from fastapi import Depends
 from fastapi import HTTPException
+from fastapi import Request
 from sqlalchemy.orm import Session
 
 from crud.company import CompanyExistException
+from logger.log import save_log
 from schemas import schema
 from hubspot_api import utils
 from dependencies.dependencies import get_db
@@ -17,7 +19,8 @@ router = APIRouter(
 
 
 @router.post("/companies/")
-def create_company(company: schema.CreateCompany, db: Session = Depends(get_db)):
+@save_log
+async def create_company(request: Request, company: schema.CreateCompany, db: Session = Depends(get_db)):
     db_company = None
     try:
         db_company = _company.create_company(db, company)
@@ -30,7 +33,8 @@ def create_company(company: schema.CreateCompany, db: Session = Depends(get_db))
 
 
 @router.get("/company/{company_name}/")
-def get_company(company_name):
+@save_log
+async def get_company(request: Request, company_name):
     try:
         company = utils.get_company_by_name(company_name)
     except utils.CompanyException as exc:

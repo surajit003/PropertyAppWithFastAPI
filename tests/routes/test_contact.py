@@ -5,7 +5,9 @@ from models.contact import Contact
 
 
 @mock.patch("routes.v1.contact.utils.get_contact_by_email")
-def test_get_contact_by_email(mock_get_contact_by_email, client):
+@mock.patch("logger.log.logger.debug")
+def test_get_contact_by_email(mock_logger_debug, mock_get_contact_by_email, client):
+    mock_logger_debug.return_value = "Ok"
     mock_get_contact_by_email.return_value = {
         "id": "1234",
         "email": "test@example.com",
@@ -24,9 +26,11 @@ def test_get_contact_by_email(mock_get_contact_by_email, client):
 
 @mock.patch("routes.v1.contact.utils.create_contact")
 @mock.patch("routes.v1.contact._contact.create_contact")
+@mock.patch("logger.log.logger.debug")
 def test_create_contact(
-    mock_db_create_contact, mock_hubspot_create_contact, organization, client
+        mock_logger_debug, mock_db_create_contact, mock_hubspot_create_contact, organization, client
 ):
+    mock_logger_debug.return_value = "Ok"
     mock_db_create_contact.return_value = {
         "first_name": "raaj",
         "last_name": "das",
@@ -48,7 +52,10 @@ def test_create_contact(
     assert response.json() == {"contact_id": 12356}
 
 
-def test_create_contact_returns_duplicate_email_error(organization, contact, client):
+@mock.patch("logger.log.logger.debug")
+def test_create_contact_returns_duplicate_email_error(mock_logger_debug,
+                                                      organization, contact, client):
+    mock_logger_debug.return_value = "Ok"
     response = client.post(
         "/api/v1/contacts/",
         json={
@@ -62,16 +69,19 @@ def test_create_contact_returns_duplicate_email_error(organization, contact, cli
     assert response.status_code == 200
     assert response.json() == {
         "detail": "duplicate key value violates unique constraint "
-        '"contact_email_key"\nDETAIL:  Key (email)=('
-        "testuser@example.com) already exists.\n"
+                  '"contact_email_key"\nDETAIL:  Key (email)=('
+                  "testuser@example.com) already exists.\n"
     }
 
 
 @mock.patch("routes.v1.contact._contact.delete_contact")
 @mock.patch("routes.v1.contact.utils.create_contact")
+@mock.patch("logger.log.logger.debug")
 def test_create_contact_raises_hubspot_contactexception(
-    mock_create_contact, mock_delete_contact, organization, client
+        mock_logger_debug,
+        mock_create_contact, mock_delete_contact, organization, client
 ):
+    mock_logger_debug.return_value = "Ok"
     mock_create_contact.side_effect = ContactException(
         "Email with this contact exists in Hubspot"
     )
@@ -91,9 +101,11 @@ def test_create_contact_raises_hubspot_contactexception(
 
 
 @mock.patch("routes.v1.contact.utils.create_contact")
+@mock.patch("logger.log.logger.debug")
 def test_create_contact_rollbacks_db_contact_for_hubspot_exception(
-    mock_create_contact, db, organization, client
+        mock_logger_debug, mock_create_contact, db, organization, client
 ):
+    mock_logger_debug.return_value = "Ok"
     mock_create_contact.side_effect = ContactException(
         "Email with this contact exists " "in Hubspot"
     )

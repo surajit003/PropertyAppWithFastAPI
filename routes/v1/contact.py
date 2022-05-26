@@ -1,10 +1,12 @@
 from fastapi import APIRouter
 from fastapi import Depends
 from fastapi import HTTPException
+from fastapi import Request
 from sqlalchemy.orm import Session
 
 from crud.contact import ContactExistException
 from crud import contact as _contact
+from logger.log import save_log
 from schemas import schema
 from hubspot_api import utils
 from dependencies.dependencies import get_db
@@ -18,7 +20,9 @@ router = APIRouter(
 
 
 @router.post("/contacts/")
-def create_contact(contact: schema.CreateContact, db: Session = Depends(get_db)):
+@save_log
+async def create_contact(request: Request, contact: schema.CreateContact,
+                         db: Session = Depends(get_db)):
     db_contact = None
     try:
         org_name = contact.company_name
@@ -33,7 +37,8 @@ def create_contact(contact: schema.CreateContact, db: Session = Depends(get_db))
 
 
 @router.get("/contact/{email}/")
-def get_contact(email):
+@save_log
+async def get_contact(request: Request, email):
     try:
         contact = utils.get_contact_by_email(email)
     except utils.ContactException as exc:
