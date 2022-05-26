@@ -7,11 +7,13 @@ from fastapi.templating import Jinja2Templates
 from routes.v1 import email
 from routes.v1 import contact
 from routes.v1 import company
+from routes.v1 import charge
 
 app = FastAPI()
 app.include_router(email.router)
 app.include_router(contact.router)
 app.include_router(company.router)
+app.include_router(charge.router)
 
 templates = Jinja2Templates(directory="templates")
 

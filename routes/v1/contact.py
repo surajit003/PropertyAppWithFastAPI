@@ -13,7 +13,7 @@ from dependencies.dependencies import get_db
 from crud import company as _company
 
 router = APIRouter(
-    prefix='/api/v1',
+    prefix="/api/v1",
     tags=["contact"],
     responses={404: {"description": "Not found"}},
 )
@@ -21,8 +21,9 @@ router = APIRouter(
 
 @router.post("/contacts/")
 @save_log
-async def create_contact(request: Request, contact: schema.CreateContact,
-                         db: Session = Depends(get_db)):
+async def create_contact(
+    request: Request, contact: schema.CreateContact, db: Session = Depends(get_db)
+):
     db_contact = None
     try:
         org_name = contact.company_name

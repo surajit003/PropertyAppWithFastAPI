@@ -16,7 +16,7 @@ from sqlalchemy.orm import Session
 from dependencies.dependencies import get_db
 
 router = APIRouter(
-    prefix='/api/v1',
+    prefix="/api/v1",
     tags=["email"],
     responses={404: {"description": "Not found"}},
 )
@@ -38,4 +38,3 @@ async def send_email(request: Request, db: Session = Depends(get_db)):
     except (UnauthorizedException, BadRequestException, MessageExistException) as exc:
         raise HTTPException(status_code=200, detail=str(exc))
     return response
-

@@ -24,9 +24,10 @@ if config.config_file_name is not None:
 
 # add your model's MetaData object here
 # for 'autogenerate' support
-from models import payment
+from models.payment import Charge
 from models import contact
 from models import message
+
 target_metadata = Base.metadata
 
 
