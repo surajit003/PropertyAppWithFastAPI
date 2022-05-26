@@ -15,7 +15,7 @@
     - Associate contact with the organization
     - Save Contact details in Hubspot
 
-# Task 3 (TODO)
+# Task 3 (IN PROGRESS)
 
     - Create a Charge into our system for an organization
     - Save Charge details in database
