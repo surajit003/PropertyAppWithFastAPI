@@ -28,7 +28,11 @@ def test_get_contact_by_email(mock_logger_debug, mock_get_contact_by_email, clie
 @mock.patch("routes.v1.contact._contact.create_contact")
 @mock.patch("logger.log.logger.debug")
 def test_create_contact(
-        mock_logger_debug, mock_db_create_contact, mock_hubspot_create_contact, organization, client
+    mock_logger_debug,
+    mock_db_create_contact,
+    mock_hubspot_create_contact,
+    organization,
+    client,
 ):
     mock_logger_debug.return_value = "Ok"
     mock_db_create_contact.return_value = {
@@ -53,8 +57,9 @@ def test_create_contact(
 
 
 @mock.patch("logger.log.logger.debug")
-def test_create_contact_returns_duplicate_email_error(mock_logger_debug,
-                                                      organization, contact, client):
+def test_create_contact_returns_duplicate_email_error(
+    mock_logger_debug, organization, contact, client
+):
     mock_logger_debug.return_value = "Ok"
     response = client.post(
         "/api/v1/contacts/",
@@ -69,8 +74,8 @@ def test_create_contact_returns_duplicate_email_error(mock_logger_debug,
     assert response.status_code == 200
     assert response.json() == {
         "detail": "duplicate key value violates unique constraint "
-                  '"contact_email_key"\nDETAIL:  Key (email)=('
-                  "testuser@example.com) already exists.\n"
+        '"contact_email_key"\nDETAIL:  Key (email)=('
+        "testuser@example.com) already exists.\n"
     }
 
 
@@ -78,8 +83,7 @@ def test_create_contact_returns_duplicate_email_error(mock_logger_debug,
 @mock.patch("routes.v1.contact.utils.create_contact")
 @mock.patch("logger.log.logger.debug")
 def test_create_contact_raises_hubspot_contactexception(
-        mock_logger_debug,
-        mock_create_contact, mock_delete_contact, organization, client
+    mock_logger_debug, mock_create_contact, mock_delete_contact, organization, client
 ):
     mock_logger_debug.return_value = "Ok"
     mock_create_contact.side_effect = ContactException(
@@ -103,7 +107,7 @@ def test_create_contact_raises_hubspot_contactexception(
 @mock.patch("routes.v1.contact.utils.create_contact")
 @mock.patch("logger.log.logger.debug")
 def test_create_contact_rollbacks_db_contact_for_hubspot_exception(
-        mock_logger_debug, mock_create_contact, db, organization, client
+    mock_logger_debug, mock_create_contact, db, organization, client
 ):
     mock_logger_debug.return_value = "Ok"
     mock_create_contact.side_effect = ContactException(

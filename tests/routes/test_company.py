@@ -6,8 +6,7 @@ from models.payment import Organization
 
 @mock.patch("routes.v1.company.utils.get_company_by_name")
 @mock.patch("logger.log.logger.debug")
-def test_company(mock_logger_debug,
-                 mock_get_company_by_name, client):
+def test_company(mock_logger_debug, mock_get_company_by_name, client):
     mock_logger_debug.return_value = "Ok"
     mock_get_company_by_name.return_value = {"id": 12345}
     response = client.get("/api/v1/company/test-company/")
@@ -17,8 +16,9 @@ def test_company(mock_logger_debug,
 
 @mock.patch("routes.v1.company.utils.get_company_by_name")
 @mock.patch("logger.log.logger.debug")
-def test_company_for_hubspot_company_exception(mock_logger_debug,
-                                               mock_get_company_by_name, client):
+def test_company_for_hubspot_company_exception(
+    mock_logger_debug, mock_get_company_by_name, client
+):
     mock_logger_debug.return_value = "Ok"
     mock_get_company_by_name.side_effect = CompanyException(
         "Something went wrong in fetching company from Hubspot"
@@ -44,8 +44,9 @@ def test_create_company(mock_logger_debug, mock_create_company, client):
 
 @mock.patch("routes.v1.company.utils.create_company")
 @mock.patch("logger.log.logger.debug")
-def test_create_company_with_hubspot_company_exception(mock_logger_debug, mock_create_company,
-                                                       client, db):
+def test_create_company_with_hubspot_company_exception(
+    mock_logger_debug, mock_create_company, client, db
+):
     mock_logger_debug.return_value = "Ok"
     mock_create_company.side_effect = CompanyException(
         "Something went wrong in creating company in Hubspot"
@@ -62,8 +63,9 @@ def test_create_company_with_hubspot_company_exception(mock_logger_debug, mock_c
 
 
 @mock.patch("logger.log.logger.debug")
-def test_create_company_with_duplicate_organization_org_id(mock_logger_debug,
-                                                           client, organization):
+def test_create_company_with_duplicate_organization_org_id(
+    mock_logger_debug, client, organization
+):
     mock_logger_debug.return_value = "Ok"
     response = client.post(
         "/api/v1/companies/", json={"org_id": 12345, "name": "UWISO"}
@@ -71,14 +73,15 @@ def test_create_company_with_duplicate_organization_org_id(mock_logger_debug,
     assert response.status_code == 200
     assert response.json() == {
         "detail": "duplicate key value violates unique constraint "
-                  '"organization_org_id_key"\nDETAIL:  Key (org_id)=('
-                  "12345) already exists.\n"
+        '"organization_org_id_key"\nDETAIL:  Key (org_id)=('
+        "12345) already exists.\n"
     }
 
 
 @mock.patch("logger.log.logger.debug")
-def test_create_company_with_duplicate_organization_name(mock_logger_debug,
-                                                         client, organization):
+def test_create_company_with_duplicate_organization_name(
+    mock_logger_debug, client, organization
+):
     mock_logger_debug.return_value = "Ok"
     response = client.post(
         "/api/v1/companies/", json={"org_id": 1232245, "name": "Test org"}
@@ -86,6 +89,6 @@ def test_create_company_with_duplicate_organization_name(mock_logger_debug,
     assert response.status_code == 200
     assert response.json() == {
         "detail": "duplicate key value violates unique constraint "
-                  '"organization_name_key"\nDETAIL:  Key (name)=('
-                  "Test org) already exists.\n"
+        '"organization_name_key"\nDETAIL:  Key (name)=('
+        "Test org) already exists.\n"
     }
