@@ -42,8 +42,8 @@ class Charge(Base):
     charge_type = Column(Enum(ChargeType), nullable=False)
     org_id = Column(Integer, ForeignKey("organization.id"))
     organization = relationship("Organization", backref="charges")
-    created_at = Column(DateTime, default=datetime.datetime.now)
-    modified_at = Column(DateTime, default=datetime.datetime.now)
+    created = Column(DateTime, default=datetime.datetime.now)
+    modified = Column(DateTime, default=datetime.datetime.now)
 
 
 class Payment(Base):
