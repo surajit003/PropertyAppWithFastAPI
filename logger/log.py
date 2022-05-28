@@ -1,8 +1,10 @@
 import logging
 import os
+import uuid
 from logging.handlers import RotatingFileHandler
 from functools import wraps
 
+from aws.services.dynamo_db.logs import create_log
 from settings import LOG_FILE_DIR
 from settings import LOG_FILE_NAME
 
@@ -39,6 +41,7 @@ def save_log(func):
         try:
             request = kwargs.get("request")
             url = request.url
+            client = request.client.host
             method = request.method
             message = dict(
                 url=str(url),
@@ -51,6 +54,12 @@ def save_log(func):
                 json_data = await request.json()
                 message["data"] = [json_data]
             logger.debug(message)
+            data = dict(
+                log_id=str(uuid.uuid4()),
+                request_ip=client,
+                message=message
+            )
+            await create_log(data)
         except Exception as exc:
             logger.exception(f"Exception occurred {exc}")
             pass
