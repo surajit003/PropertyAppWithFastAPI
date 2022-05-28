@@ -67,7 +67,7 @@ def test_create_contact_returns_duplicate_email_error(
             "first_name": "raaj",
             "last_name": "das",
             "email": "testuser@example.com",
-            "phone": "2547120202002",
+            "phone": "2547120202003",
             "company_name": "Test org",
         },
     )
