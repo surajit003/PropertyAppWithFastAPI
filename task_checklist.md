@@ -54,6 +54,5 @@
 # Task 7 (IN PROGRESS)
 
     - Integrate boto3
-    - Add tests for the API endpoints
-    - Add tests for the stripe api functionality
-    - Add tests for hubspot functions
+    - Push request logs to AWS Dynamo DB
+    - Add tests
