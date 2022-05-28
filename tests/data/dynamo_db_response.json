@@ -1,0 +1,16 @@
+{
+  "ResponseMetadata": {
+      "RequestId": "PFK7OPBR2L9FLV3N9OFCHO3VJNVV4KQNSO5A",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "server": "Server",
+        "date": "Sat, 28 May 2022 18:32:28 GMT",
+        "content-type": "application/x-amz-json-1.0",
+        "content-length": "2",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "PFK7OPBR2L9FLV3N9OFCHO3V",
+        "x-amz-crc32": "274561"
+      },
+      "RetryAttempts": 0
+    }
+  }

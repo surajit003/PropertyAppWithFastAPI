@@ -1,16 +1,10 @@
-import json
 import pytest
 from unittest import mock
 
 from email_api.email import send_email
 from email_api.email import UnauthorizedException
 from email_api.email import BadRequestException
-from settings import TEST_DATA_DIR
-
-
-def read_json(filename):
-    with open(TEST_DATA_DIR.joinpath(filename)) as resp_file:
-        return json.load(resp_file)
+from tests.integrations.common import read_json
 
 
 @mock.patch("email_api.email.SendGridAPIClient.send")
