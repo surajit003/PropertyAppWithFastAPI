@@ -45,6 +45,7 @@ payment. The Organization makes the payment and a payment record is saved in the
     - Hubspot
     - Sendgrid
     - Stripe
+    - AWS DynamoDB
 
 # Logs
 
