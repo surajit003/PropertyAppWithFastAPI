@@ -6,7 +6,7 @@ from tests.integrations.common import read_json
 
 
 class MockDynamoDbTable:
-    def put_item(self, item):
+    def put_item(self, **kwargs):
         response = read_json("dynamo_db_response.json")
         return response
 

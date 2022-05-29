@@ -25,6 +25,6 @@ async def create_log(data):
             "request_ip": data["request_ip"],
             "message": json.dumps(data["message"]),
         }
-        return table.put_item(trans)
+        return table.put_item(Item=trans)
     except botocore.exceptions.ClientError as e:
         raise BotoClientException(e)

@@ -59,8 +59,7 @@ def save_log(func):
                 request_ip=client,
                 message=message
             )
-            res = await create_log(data)
-            print('res',res)
+            await create_log(data)
         except Exception as exc:
             logger.exception(f"Exception occurred {exc}")
             pass
