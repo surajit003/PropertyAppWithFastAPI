@@ -2,6 +2,7 @@ import sqlalchemy.exc
 from sqlalchemy.orm import Session
 
 from models import payment
+from models.payment import Organization
 
 
 class ChargeExistException(Exception):

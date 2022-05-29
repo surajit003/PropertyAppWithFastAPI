@@ -7,12 +7,12 @@ from fastapi.testclient import TestClient
 from sqlalchemy.orm import Session
 
 import schemas.schema
+from crud.charge import add_charge
 from crud.company import create_company
 from crud.contact import create_contact
 from crud.message import save_message
 from models.message import MessageType
 from models.message import Carrier
-from models.message import Message
 from models.payment import Organization
 from tests.test_database import SQLALCHEMY_DATABASE_URL
 
@@ -52,20 +52,36 @@ def client(db):
 
 @pytest.fixture
 def organization(db):
-    create_company(db, schemas.schema.CreateCompany(name="Test org", org_id=12345))
+    yield create_company(
+        db, schemas.schema.CreateCompany(name="Test org", org_id=12345)
+    )
 
 
 @pytest.fixture
-def message(db):
+@pytest.mark.asyncio
+async def charge_onboarding(db, organization):
+    await add_charge(
+        db,
+        schemas.schema.CreateCharge(
+            company_name="Test org",
+            currency="USD",
+            charge_type="ONBOARDING",
+            amount=200,
+        ),
+        organization.id,
+    )
+
+
+@pytest.fixture
+@pytest.mark.asyncio
+async def message(db):
     message_data = dict(
         message_id="123657ab",
         status_code=202,
         message_type=MessageType.EMAIL.value,
         carrier=Carrier.SENDGRID.value,
     )
-    db_item = Message(**message_data)
-    db.add(db_item)
-    db.commit()
+    await save_message(db, message_data)
 
 
 @pytest.fixture
