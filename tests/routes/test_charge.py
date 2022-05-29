@@ -1,6 +1,6 @@
-from unittest import mock
-
 import pytest
+
+from unittest import mock
 
 
 @mock.patch("logger.log.logger.debug")
