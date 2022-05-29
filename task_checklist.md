@@ -15,7 +15,7 @@
     - Associate contact with the organization
     - Save Contact details in Hubspot
 
-# Task 3 (IN PROGRESS)
+# Task 3 (DONE)
 
     - Create a Charge into our system for an organization
     - Save Charge details in database
@@ -51,7 +51,7 @@
     - Add tests for the stripe api functionality
     - Add tests for hubspot functions
 
-# Task 7 (IN PROGRESS)
+# Task 7 (DONE)
 
     - Integrate boto3
     - Push request logs to AWS Dynamo DB
