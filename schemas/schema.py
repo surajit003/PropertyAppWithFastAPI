@@ -20,3 +20,15 @@ class CreateContact(ContactBase):
 
 class CreateCompany(CompanyBase):
     pass
+
+
+class ChargeBase(BaseModel):
+    currency: str
+    amount: int
+    charge_type: str
+    company_name: str
+
+
+class CreateCharge(ChargeBase):
+    pass
+
