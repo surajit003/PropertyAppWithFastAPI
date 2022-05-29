@@ -1,9 +1,8 @@
-import datetime
-
 from fastapi import APIRouter
 from fastapi import Depends
 from fastapi import HTTPException
 from fastapi import Request
+from fastapi import status
 from sqlalchemy.orm import Session
 
 from crud.charge import ChargeExistException
@@ -20,7 +19,7 @@ router = APIRouter(
 )
 
 
-@router.post("/charges/")
+@router.post("/charges/", status_code=status.HTTP_201_CREATED)
 @save_log
 async def create_charge(request: Request, charge: CreateCharge, db: Session = Depends(get_db)):
     try:
